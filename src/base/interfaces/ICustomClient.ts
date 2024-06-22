@@ -1,14 +1,14 @@
-import { Client, Collection } from 'discord.js';
+import { Client, Collection } from 'discord.js'
 
-import { ICommand } from '@/base/interfaces/ICommand';
+import { ICommand } from '@/base/interfaces/ICommand'
 
 export interface ICustomClient extends Client {
-    commands: Collection<string, ICommand>;
-    interactions: Collection<string, ICommand>;
+    commands: Collection<string, ICommand>
+    interactions: Collection<string, ICommand>
 
     /**
      * Start the client
      * @returns {Promise<void>}
      */
-    start: () => Promise<void>;
+    start: () => Promise<void>
 }

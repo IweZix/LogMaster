@@ -4,7 +4,8 @@
   "description": "logmaster desc",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --cache --fix src",
+    "prettier": "prettier --write src",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "build": "tsup src/index.ts --minify"
@@ -14,7 +15,10 @@
   "dependencies": {
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
-    "fastlogging": "^1.0.1"
+    "eslint": "^9.5.0",
+    "fastlogging": "^1.0.1",
+    "prettier": "^3.3.2",
+    "vue-tsc": "^2.0.22"
   },
   "devDependencies": {
     "tsup": "^8.1.0",

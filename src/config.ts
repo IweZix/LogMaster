@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 const {
     TOKEN,
@@ -9,13 +9,19 @@ const {
     VERSION,
     INVITE_BOT_URL,
     SUPPORT_SERVER_URL,
-    WEB_SITE_URL 
-} = process.env;
+    WEB_SITE_URL
+} = process.env
 
-if (!TOKEN || !COLOR || !DEVELOPER_ID
-    || !VERSION || !INVITE_BOT_URL 
-    || !SUPPORT_SERVER_URL || !WEB_SITE_URL) {
-  throw new Error("Missing environment variables");
+if (
+    !TOKEN ||
+    !COLOR ||
+    !DEVELOPER_ID ||
+    !VERSION ||
+    !INVITE_BOT_URL ||
+    !SUPPORT_SERVER_URL ||
+    !WEB_SITE_URL
+) {
+    throw new Error('Missing environment variables')
 }
 
 export const config = {
@@ -26,4 +32,4 @@ export const config = {
     inviteBotUrl: INVITE_BOT_URL,
     supportServerUrl: SUPPORT_SERVER_URL,
     webSiteUrl: WEB_SITE_URL
-};
+}
