@@ -1,14 +1,14 @@
-import { Interaction } from 'discord.js';
+import { Interaction } from 'discord.js'
 
 interface ICustomChannelInteraction {
     // Channel id
-    id: String;
+    id: String
     // Channel type : accessible via ChannelType[interaction.type]
-    type: Number;
+    type: Number
     // Guild object
-    guild: Object;
+    guild: Object
     // Parent id (category id)
-    parentId?: string;
+    parentId?: string
 }
 
-export type ExtendedChannelInteraction = Interaction & ICustomChannelInteraction;
+export type ExtendedChannelInteraction = Interaction & ICustomChannelInteraction
