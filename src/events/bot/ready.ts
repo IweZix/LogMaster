@@ -1,8 +1,8 @@
-import { Events, ActivityType } from 'discord.js'
+import { Events, ActivityType } from 'discord.js';
 
-import FastLogging from 'fastlogging'
+import FastLogging from 'fastlogging';
 
-const logger = new FastLogging(true, true)
+const logger = new FastLogging(true, true);
 
 module.exports = {
     name: Events.ClientReady,
@@ -10,14 +10,14 @@ module.exports = {
     async run(client: any) {
         await client.application.commands.set(
             client.commands.map((command: any) => command.data)
-        )
+        );
 
-        logger.info(`[SlashCommands] => loaded`)
+        logger.info(`[SlashCommands] => loaded`);
 
         client.user.setActivity(`${client.guilds.cache.size} server(s)`, {
             type: ActivityType.Watching
-        })
+        });
 
-        logger.success(`[Bot] => ${client.user.username} is online`)
+        logger.success(`[Bot] => ${client.user.username} is online`);
     }
-}
+};

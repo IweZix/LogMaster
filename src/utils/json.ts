@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'node:path'
+import fs from 'fs';
+import path from 'node:path';
 
 /**
  * Parse a JSON file and return the content as an array.
@@ -9,15 +9,15 @@ import path from 'node:path'
  */
 export const parse = (filePath: fs.PathLike, defaultArray = []): Array<any> => {
     if (!fs.existsSync(filePath)) {
-        return defaultArray
+        return defaultArray;
     }
-    const fileData = fs.readFileSync(filePath, 'utf8')
+    const fileData = fs.readFileSync(filePath, 'utf8');
     try {
-        return JSON.parse(fileData)
+        return JSON.parse(fileData);
     } catch (err) {
-        return defaultArray
+        return defaultArray;
     }
-}
+};
 
 /**
  * Serialize an object to a JSON file.
@@ -25,10 +25,10 @@ export const parse = (filePath: fs.PathLike, defaultArray = []): Array<any> => {
  * @param {any} object the object to serialize
  */
 export const serialize = (filePath: fs.PathLike, object: any): void => {
-    const objectSerialized = JSON.stringify(object)
-    createPotentialLastDirectory(filePath.toString())
-    fs.writeFileSync(filePath, objectSerialized)
-}
+    const objectSerialized = JSON.stringify(object);
+    createPotentialLastDirectory(filePath.toString());
+    fs.writeFileSync(filePath, objectSerialized);
+};
 
 /**
  * Create the potential last directory of a file path.
@@ -38,7 +38,7 @@ const createPotentialLastDirectory = (filePath: String): void => {
     const pathToLastDirectory = filePath.substring(
         0,
         filePath.lastIndexOf(path.sep)
-    )
-    if (fs.existsSync(pathToLastDirectory)) return
-    fs.mkdirSync(pathToLastDirectory)
-}
+    );
+    if (fs.existsSync(pathToLastDirectory)) return;
+    fs.mkdirSync(pathToLastDirectory);
+};

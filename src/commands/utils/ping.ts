@@ -4,7 +4,7 @@ import {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle
-} from 'discord.js'
+} from 'discord.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,22 +22,22 @@ module.exports = {
                 .setFooter({
                     text: `© 2024 | ${interaction?.client?.user?.username}`
                 })
-                .setTimestamp()
+                .setTimestamp();
             const rowButton = new ActionRowBuilder().addComponents(
                 new ButtonBuilder()
                     .setCustomId('ping')
                     .setEmoji('🔄')
                     .setLabel('Refresh')
                     .setStyle(ButtonStyle.Secondary)
-            )
+            );
             await interaction.reply({
                 embeds: [embed],
                 components: [rowButton]
-            })
+            });
         } catch (error) {
             await interaction.reply(
                 'There was an error while executing this command!'
-            )
+            );
         }
     }
-}
+};

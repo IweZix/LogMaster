@@ -1,20 +1,20 @@
-import { Channel, Guild } from 'discord.js'
+import { Channel, Guild } from 'discord.js';
 
 interface IChannel {
     // Channel id
-    id: String
+    id: String;
     // Channel name
-    name: String
+    name: String;
     // Channel type : accessible via ChannelType[interaction.type]
-    type: Number
+    type: Number;
     // Guild object
-    guild: Guild
+    guild: Guild;
     // Parent id (category id)
-    parentId?: string
+    parentId?: string;
     // Channel topic
-    topic: String
+    topic: String;
     // NSFW status
-    nsfw: Boolean
+    nsfw: Boolean;
 }
 
-export type ICustomChannel = Channel & IChannel
+export type ICustomChannel = Channel & IChannel;

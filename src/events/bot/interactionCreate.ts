@@ -3,10 +3,10 @@ import {
     InteractionType,
     PermissionsBitField,
     GuildMember
-} from 'discord.js'
+} from 'discord.js';
 
-import { ICommand } from '@/base/interfaces/ICommand'
-import { ICustomClient } from '@/base/interfaces/ICustomClient'
+import { ICommand } from '@/base/interfaces/ICommand';
+import { ICustomClient } from '@/base/interfaces/ICustomClient';
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -18,20 +18,20 @@ module.exports = {
         if (interaction.type === InteractionType.ApplicationCommand) {
             const command = client.commands.get(interaction.commandName) as
                 | ICommand
-                | undefined
+                | undefined;
 
             if (!command) {
                 return await interaction.reply({
                     content: 'Command not found.',
                     ephemeral: true
-                })
+                });
             }
 
-            const member = interaction.member as GuildMember | null
+            const member = interaction.member as GuildMember | null;
             if (member && command.data.default_member_permissions) {
                 const memberPermissions = new PermissionsBitField(
                     member.permissions
-                )
+                );
                 if (
                     !memberPermissions.has(
                         command.data.default_member_permissions
@@ -41,11 +41,11 @@ module.exports = {
                         content:
                             "You don't have permission to use this command.",
                         ephemeral: true
-                    })
+                    });
                 }
             }
 
-            await command.run(interaction)
+            await command.run(interaction);
         }
 
         /**
@@ -56,13 +56,13 @@ module.exports = {
              * If the interaction is a button.
              */
             if (interaction.isButton()) {
-                const name = interaction.customId.split('_')[0]
-                const args = interaction.customId.split('_').slice(1)
-                const file = client.interactions.get(name)
+                const name = interaction.customId.split('_')[0];
+                const args = interaction.customId.split('_').slice(1);
+                const file = client.interactions.get(name);
 
-                if (!file) return
+                if (!file) return;
 
-                const member = interaction.member as GuildMember | null
+                const member = interaction.member as GuildMember | null;
                 if (
                     member &&
                     file.permission &&
@@ -74,11 +74,11 @@ module.exports = {
                         content:
                             "You don't have permission to use this button.",
                         ephemeral: true
-                    })
+                    });
                 }
 
-                await file.run(interaction, ...args)
+                await file.run(interaction, ...args);
             }
         }
     }
-}
+};

@@ -1,6 +1,6 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const {
     TOKEN,
@@ -10,7 +10,7 @@ const {
     INVITE_BOT_URL,
     SUPPORT_SERVER_URL,
     WEB_SITE_URL
-} = process.env
+} = process.env;
 
 if (
     !TOKEN ||
@@ -21,7 +21,7 @@ if (
     !SUPPORT_SERVER_URL ||
     !WEB_SITE_URL
 ) {
-    throw new Error('Missing environment variables')
+    throw new Error('Missing environment variables');
 }
 
 export const config = {
@@ -32,4 +32,4 @@ export const config = {
     inviteBotUrl: INVITE_BOT_URL,
     supportServerUrl: SUPPORT_SERVER_URL,
     webSiteUrl: WEB_SITE_URL
-}
+};

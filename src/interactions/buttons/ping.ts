@@ -1,4 +1,4 @@
-import { ComponentType, EmbedBuilder } from 'discord.js'
+import { ComponentType, EmbedBuilder } from 'discord.js';
 
 module.exports = {
     name: 'ping',
@@ -12,9 +12,9 @@ module.exports = {
             .setFooter({
                 text: `© 2024 | ${interaction.client.user.username}`
             })
-            .setTimestamp()
+            .setTimestamp();
 
-        await interaction.message.edit({ embeds: [embed] })
-        await interaction.deferUpdate()
+        await interaction.message.edit({ embeds: [embed] });
+        await interaction.deferUpdate();
     }
-}
+};
