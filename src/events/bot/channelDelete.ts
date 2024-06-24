@@ -6,7 +6,7 @@ import { parse } from '@/utils/json'
 const jsonPath = './data/log.json'
 
 const embed = new EmbedBuilder()
-    .setTitle('Channel Created')
+    .setTitle('Channel Deleted')
     .setColor('#00FF00')
     .setTimestamp()
 
