@@ -1,6 +1,6 @@
-import { Interaction } from 'discord.js'
+import { Channel, Guild } from 'discord.js'
 
-interface ICustomChannelInteraction {
+interface IChannel {
     // Channel id
     id: String
     // Channel name
@@ -8,9 +8,13 @@ interface ICustomChannelInteraction {
     // Channel type : accessible via ChannelType[interaction.type]
     type: Number
     // Guild object
-    guild: Object
+    guild: Guild
     // Parent id (category id)
     parentId?: string
+    // Channel topic
+    topic: String
+    // NSFW status
+    nsfw: Boolean
 }
 
-export type ExtendedChannelInteraction = Interaction & ICustomChannelInteraction
+export type ICustomChannel = Channel & IChannel
