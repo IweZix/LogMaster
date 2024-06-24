@@ -1,7 +1,8 @@
-import { Events, Channel, TextChannel, EmbedBuilder, ChannelType, CategoryChannel, AuditLogEvent } from "discord.js";
+import { Events, TextChannel, EmbedBuilder, ChannelType, CategoryChannel } from "discord.js";
 
-import { ExtendedChannelInteraction } from "@/base/interfaces/ICustomChannelInteraction";
 import { parse } from '@/utils/json'
+import { CustomClient } from "@/base/classes/CustomClient";
+import { ICustomChannel } from "@/base/interfaces/ICustomChannel";
 
 const jsonPath = './data/log.json'
 
@@ -13,9 +14,9 @@ const embed = new EmbedBuilder()
 module.exports = {
     name: Events.ChannelDelete,
 
-    async run(channel: Channel, interaction: ExtendedChannelInteraction) {
+    async run(client: CustomClient, channel: ICustomChannel) {
         
-        const guildId = interaction.guild?.id
+        const guildId = channel.guild?.id
         const data = parse(jsonPath, [])
         const guildData = data.find((data: any) => data.guildId === guildId)
 
@@ -23,7 +24,7 @@ module.exports = {
             return
         }
 
-        const logChannel = interaction.guild?.channels.cache.get(
+        const logChannel = channel.guild?.channels.cache.get(
             guildData.logChannelId
         ) as TextChannel
 
@@ -31,25 +32,25 @@ module.exports = {
             return
         }
 
-        const logs = await interaction.guild.fetchAuditLogs(
+        const logs = await channel.guild.fetchAuditLogs(
             { type: 12 }
         ).then(audit => audit.entries.first()) || { executor: null };
         const executor = logs.executor?.id || 'Unknown';
 
-        if (interaction.parentId) {
-            const parent = interaction.guild?.channels.cache.get(
-                interaction.parentId
+        if (channel.parentId) {
+            const parent = channel.guild?.channels.cache.get(
+                channel.parentId
             ) as CategoryChannel
             embed.setDescription(`
-                A ${ChannelType[interaction.type]} channel has been deleted.
-                > **name:** ${interaction.name}
+                A ${ChannelType[channel.type]} channel has been deleted.
+                > **name:** ${channel.name}
                 > **parent:** ${parent.toString()}
                 > **executor:** <@${executor}>
             `)
         } else {
             embed.setDescription(`
-                A ${ChannelType[interaction.type]} channel has been deleted.
-                > **name:** ${interaction.name}
+                A ${ChannelType[channel.type]} channel has been deleted.
+                > **name:** ${channel.name}
                 > **executor:** <@${executor}>
             `)
         }
