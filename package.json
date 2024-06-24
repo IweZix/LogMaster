@@ -4,7 +4,7 @@
   "description": "logmaster desc",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 1",
+    "test": "echo \"No test specified\"",
     "lint": "eslint --cache --fix src",
     "prettier": "prettier --write src",
     "dev": "tsx watch src/index.ts",
