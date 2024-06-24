@@ -2,8 +2,6 @@ import {
     Events,
     EmbedBuilder,
     TextChannel,
-    User,
-    Guild,
     GuildMember,
 } from 'discord.js';
 
@@ -13,7 +11,7 @@ import { CustomClient } from '@/base/classes/CustomClient';
 const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
-    .setTitle('Channel Created')
+    .setTitle('Member Joined')
     .setColor('#00FF00')
     .setTimestamp();
 
