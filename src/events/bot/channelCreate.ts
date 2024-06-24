@@ -1,5 +1,4 @@
 import {
-    Channel,
     Events,
     EmbedBuilder,
     CategoryChannel,
@@ -8,7 +7,8 @@ import {
 } from 'discord.js'
 
 import { parse } from '@/utils/json'
-import { ExtendedChannelInteraction } from '@/base/interfaces/ICustomChannelInteraction'
+import { ICustomChannel } from '@/base/interfaces/ICustomChannel'
+import { CustomClient } from '@/base/classes/CustomClient'
 
 const jsonPath = './data/log.json'
 
@@ -20,8 +20,8 @@ const embed = new EmbedBuilder()
 module.exports = {
     name: Events.ChannelCreate,
 
-    async run(channel: Channel, interaction: ExtendedChannelInteraction) {
-        const guildId = interaction.guild?.id
+    async run(client: CustomClient, channel: ICustomChannel) {
+        const guildId = channel.guild?.id
         const data = parse(jsonPath, [])
         const guildData = data.find((data: any) => data.guildId === guildId)
 
@@ -29,7 +29,7 @@ module.exports = {
             return
         }
 
-        const logChannel = interaction.guild?.channels.cache.get(
+        const logChannel = channel.guild?.channels.cache.get(
             guildData.logChannelId
         ) as TextChannel
 
@@ -37,25 +37,25 @@ module.exports = {
             return
         }
 
-        const logs = await interaction.guild.fetchAuditLogs(
+        const logs = await channel.guild.fetchAuditLogs(
             { type: 12 }
         ).then(audit => audit.entries.first()) || { executor: null };
         const executor = logs.executor?.id || 'Unknown';
 
-        if (interaction.parentId) {
-            const parent = interaction.guild?.channels.cache.get(
-                interaction.parentId
+        if (channel.parentId) {
+            const parent = channel.guild?.channels.cache.get(
+                channel.parentId
             ) as CategoryChannel
             embed.setDescription(`
-                A new ${ChannelType[interaction.type]} channel has been created.
-                > **name:** <#${interaction.id}>
+                A new ${ChannelType[channel.type]} channel has been created.
+                > **name:** <#${channel.id}>
                 > **parent:** ${parent.toString()}
                 > **executor:** <@${executor}>
             `)
         } else {
             embed.setDescription(`
-                A new ${ChannelType[interaction.type]} channel has been created.
-                > **name:** <#${interaction.id}>
+                A new ${ChannelType[channel.type]} channel has been created.
+                > **name:** <#${channel.id}>
                 > **executor:** <@${executor}>
             `)
         }
