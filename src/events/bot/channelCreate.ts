@@ -2,11 +2,8 @@ import {
     Channel,
     Events,
     EmbedBuilder,
-    GuildChannel,
     CategoryChannel,
     TextChannel,
-    Integration,
-    Interaction,
     ChannelType
 } from 'discord.js'
 
@@ -40,6 +37,11 @@ module.exports = {
             return
         }
 
+        const logs = await interaction.guild.fetchAuditLogs(
+            { type: 12 }
+        ).then(audit => audit.entries.first()) || { executor: null };
+        const executor = logs.executor?.id || 'Unknown';
+
         if (interaction.parentId) {
             const parent = interaction.guild?.channels.cache.get(
                 interaction.parentId
@@ -48,11 +50,13 @@ module.exports = {
                 A new ${ChannelType[interaction.type]} channel has been created.
                 > **name:** <#${interaction.id}>
                 > **parent:** ${parent.toString()}
+                > **executor:** <@${executor}>
             `)
         } else {
             embed.setDescription(`
                 A new ${ChannelType[interaction.type]} channel has been created.
                 > **name:** <#${interaction.id}>
+                > **executor:** <@${executor}>
             `)
         }
 

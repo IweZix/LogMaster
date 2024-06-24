@@ -35,8 +35,6 @@ module.exports = {
             { type: 12 }
         ).then(audit => audit.entries.first()) || { executor: null };
         const executor = logs.executor?.id || 'Unknown';
-        
-        
 
         if (interaction.parentId) {
             const parent = interaction.guild?.channels.cache.get(
