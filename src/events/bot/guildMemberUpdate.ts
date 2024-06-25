@@ -64,7 +64,16 @@ module.exports = {
         }
 
         if (oldMember.user.avatar !== newMember.user.avatar) {
-            changes += `**Avatar:** ${oldMember.user.avatar} -> ${newMember.user.avatar}\n`;
+            const oldAvatarURL = oldMember.user.avatar 
+                ? `https://cdn.discordapp.com/avatars/${oldMember.user.id}/${oldMember.user.avatar}.png?size=1024` 
+                : 'URL de l\'image par défaut';
+            const newAvatarURL = newMember.user.avatar 
+                ? `https://cdn.discordapp.com/avatars/${newMember.user.id}/${newMember.user.avatar}.png?size=1024` 
+                : 'URL de l\'image par défaut';
+            embed.addFields(
+                { name: 'Old', value: `[Lien](${oldAvatarURL})`, inline: true },
+                { name: 'New', value: `[Lien](${newAvatarURL})`, inline: true }
+            )
         }
 
         embed.setDescription(`
@@ -74,7 +83,6 @@ module.exports = {
             __**Changes:**__
             ${changes}
         `).setThumbnail(newMember.user.displayAvatarURL());
-
 
 
         return await logChannel.send({ embeds: [embed] });
