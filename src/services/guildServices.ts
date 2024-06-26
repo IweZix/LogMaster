@@ -1,5 +1,5 @@
 import { parse } from "@/utils/json";
-import { GuildMember, TextChannel } from "discord.js";
+import { Guild, GuildMember, TextChannel } from "discord.js";
 
 const jsonPath = './data/log.json';
 
@@ -8,8 +8,8 @@ const jsonPath = './data/log.json';
  * @param {any} any - The object to get the log channel from
  * @returns {TextChannel | null} The log channel of the guild
  */
-export const getLogChannel = (any: any): TextChannel | null => {
-    const guildId = any.id;
+export const getLogChannel = (guild: Guild): TextChannel | null => {
+    const guildId = guild.id;
     const data = parse(jsonPath, []);
     const guildData = data.find((data: any) => data.guildId === guildId);
 
@@ -17,7 +17,7 @@ export const getLogChannel = (any: any): TextChannel | null => {
         return null;
     }
 
-    const logChannel = any.channels.cache.get(
+    const logChannel = guild.channels.cache.get(
         guildData.logChannelId
     ) as TextChannel;
 
