@@ -1,40 +1,26 @@
 import { CustomClient } from "@/base/classes/CustomClient";
+import { getExecutor, getLogChannel } from "@/services/guildServices";
 import { parse } from "@/utils/json";
-import { EmbedBuilder, Events, TextChannel } from "discord.js";
+import { EmbedBuilder, Events, GuildMember, Role, TextChannel } from "discord.js";
 
 const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
-    .setTitle('Role Created')
+    .setTitle('⚙️               Role Created               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
 module.exports = {
     name: Events.GuildRoleCreate,
 
-    async run(client: CustomClient, role: any) {
-        console.log(role);
-        
-        const guildId = role.guild?.id;
-        const data = parse(jsonPath, []);
-        const guildData = data.find((data: any) => data.guildId === guildId);
-
-        if (!guildData) {
-            return;
-        }
-
-        const logChannel = role.guild?.channels.cache.get(
-            guildData.logChannelId
-        ) as TextChannel;
+    async run(client: CustomClient, role: Role) {
+        const logChannel: TextChannel | null = getLogChannel(role.guild);
 
         if (!logChannel) {
             return;
         }
 
-        const logs = (await role.guild
-            .fetchAuditLogs({ type: 12 })
-            .then((audit: { entries: { first: () => any; }; }) => audit.entries.first())) || { executor: null };
-        const executor = logs.executor?.id || 'Unknown';
+        const executor: GuildMember = await getExecutor(role.guild);
 
         embed.setDescription(`
             A new role has been created.
@@ -42,8 +28,8 @@ module.exports = {
             > **Id:** ${role.id}
             > **Managed:** ${role.managed ? 'Yes' : 'No'}
             > **Mentionable:** ${role.mentionable ? 'Yes' : 'No'}
-            > **Executor:** <@${executor}>
-        `);
+            > **Executor:** ${executor}
+        `).setThumbnail(executor.displayAvatarURL());
 
         return await logChannel.send({ embeds: [embed]});
     }
