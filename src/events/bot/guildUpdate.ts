@@ -1,10 +1,10 @@
 import { CustomClient } from "@/base/classes/CustomClient";
-import { parse } from "@/utils/json";
-import { EmbedBuilder, Events, Guild, Role, TextChannel } from "discord.js";
+import { getExecutor, getLogChannel } from "@/services/guildServices";
+import { EmbedBuilder, Events, Guild, GuildMember, Role, TextChannel } from "discord.js";
 
 const jsonPath = './data/log.json';
 
-const embed = new EmbedBuilder()
+const embed: EmbedBuilder = new EmbedBuilder()
     .setTitle('⚙️               Guild Updated               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
@@ -13,26 +13,13 @@ module.exports = {
     name: Events.GuildUpdate,
 
     async run(client: CustomClient, oldGuild: Guild, newGuild: Guild) {              
-        const guildId = newGuild.id;
-        const data = parse(jsonPath, []);
-        const guildData = data.find((data: any) => data.guildId === guildId);
-
-        if (!guildData) {
-            return;
-        }
-
-        const logChannel = newGuild.channels.cache.get(
-            guildData.logChannelId
-        ) as TextChannel;
+        const logChannel: TextChannel | null = getLogChannel(newGuild);
 
         if (!logChannel) {
             return;
         }
 
-        const logs = (await newGuild
-            .fetchAuditLogs({ type: 12 })
-            .then((audit: { entries: { first: () => any; }; }) => audit.entries.first())) || { executor: null };
-        const executor = logs.executor;
+        const executor: GuildMember = await getExecutor(newGuild);
 
         let changes = '';
 
