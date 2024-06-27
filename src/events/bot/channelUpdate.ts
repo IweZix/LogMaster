@@ -3,12 +3,14 @@ import {
     TextChannel,
     EmbedBuilder,
     ChannelType,
-    CategoryChannel
+    CategoryChannel,
+    GuildMember
 } from 'discord.js';
 
 import { ICustomChannel } from '@/base/interfaces/ICustomChannel';
 import { parse } from '@/utils/json';
 import { CustomClient } from '@/base/classes/CustomClient';
+import { getExecutor, getLogChannel } from '@/services/guildServices';
 
 const jsonPath = './data/log.json';
 
@@ -20,33 +22,14 @@ const embed = new EmbedBuilder()
 module.exports = {
     name: Events.ChannelUpdate,
 
-    async run(
-        client: CustomClient,
-        oldChannel: ICustomChannel,
-        newChannel: ICustomChannel
-    ) {
-        const guildId = oldChannel.guild?.id;
-        const data = parse(jsonPath, []);
-        const guildData = data.find((data: any) => data.guildId === guildId);
-
-        if (!guildData) {
-            return;
-        }
-
-        const logChannel = oldChannel.guild?.channels.cache.get(
-            guildData.logChannelId
-        ) as TextChannel;
+    async run(client: CustomClient, oldChannel: ICustomChannel, newChannel: ICustomChannel) {
+        const logChannel: TextChannel | null = getLogChannel(newChannel.guild);
 
         if (!logChannel) {
             return;
         }
 
-        const logs = (await oldChannel.guild
-            .fetchAuditLogs({ type: 12 })
-            .then((audit: { entries: { first: () => any } }) =>
-                audit.entries.first()
-            )) || { executor: null };
-        const executor = logs.executor?.id || 'Unknown';
+        const executor: GuildMember = await getExecutor(newChannel.guild);
 
         let changes = '';
 
@@ -62,10 +45,6 @@ module.exports = {
                 newChannel.parentId || 'Unknown'
             ) as CategoryChannel;
             changes += `> **Parent:** ${oldParent.toString()} -> ${newParent.toString()}\n`;
-        }
-
-        if (oldChannel.topic !== newChannel.topic) {
-            changes += `> **Topic:** ${oldChannel.topic} -> ${newChannel.topic}\n`;
         }
 
         if (oldChannel.nsfw !== newChannel.nsfw) {
@@ -84,7 +63,7 @@ module.exports = {
                 A ${ChannelType[newChannel.type]} channel has been updated.
                 > **name:** <#${newChannel.id}>
                 > **parent:** ${parent.toString()}
-                > **executor:** <@${executor}>
+                > **executor:** ${executor}
                 
                 __**changes:**__
                 ${changes}
@@ -93,7 +72,7 @@ module.exports = {
             embed.setDescription(`
                 A ${ChannelType[newChannel.type]} channel has been updated.
                 > **name:** <#${newChannel.id}>
-                > **executor:** <@${executor}>
+                > **executor:** ${executor}
 
                 __**changes:**__
                 ${changes}
