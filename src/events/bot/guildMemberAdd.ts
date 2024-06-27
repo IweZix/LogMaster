@@ -7,6 +7,7 @@ import {
 
 import { parse } from '@/utils/json';
 import { CustomClient } from '@/base/classes/CustomClient';
+import { getLogChannel } from '@/services/guildServices';
 
 const jsonPath = './data/log.json';
 
@@ -19,17 +20,7 @@ module.exports = {
     name: Events.GuildMemberAdd,
 
     async run(client: CustomClient, member: GuildMember) {
-        const guildId = member.guild?.id;
-        const data = parse(jsonPath, []);
-        const guildData = data.find((data: any) => data.guildId === guildId);
-
-        if (!guildData) {
-            return;
-        }
-
-        const logChannel = member.guild?.channels.cache.get(
-            guildData.logChannelId
-        ) as TextChannel;
+        const logChannel: TextChannel | null = getLogChannel(member.guild);
 
         if (!logChannel) {
             return;
