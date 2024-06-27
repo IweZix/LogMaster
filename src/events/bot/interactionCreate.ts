@@ -8,9 +8,17 @@ import {
 import { ICommand } from '@/base/interfaces/ICommand';
 import { ICustomClient } from '@/base/interfaces/ICustomClient';
 
+/**
+ * Launches when an interaction is created
+ */
 module.exports = {
     name: Events.InteractionCreate,
 
+    /**
+     * Run the event
+     * @param {ICustomClient} client The client
+     * @param {any} interaction The interaction
+     */
     async run(client: ICustomClient, interaction: any) {
         /**
          * If the interaction is a slash command.

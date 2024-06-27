@@ -16,9 +16,18 @@ const embed = new EmbedBuilder()
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when a channel is deleted
+ */
 module.exports = {
     name: Events.ChannelDelete,
 
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {ICustomChannel} channel The channel
+     * @returns {Promise<void>} Send a message in the log channel
+     */
     async run(client: CustomClient, channel: ICustomChannel) {
         const logChannel: TextChannel | null = getLogChannel(channel.guild);
 

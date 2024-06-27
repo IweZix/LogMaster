@@ -8,25 +8,28 @@ import {
 } from 'discord.js';
 
 import { ICustomChannel } from '@/base/interfaces/ICustomChannel';
-import { parse } from '@/utils/json';
 import { CustomClient } from '@/base/classes/CustomClient';
 import { getExecutor, getLogChannel } from '@/services/guildServices';
-
-const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
     .setTitle('⚙️               Channel Update               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when a channel is updated
+ */
 module.exports = {
     name: Events.ChannelUpdate,
 
-    async run(
-        client: CustomClient,
-        oldChannel: ICustomChannel,
-        newChannel: ICustomChannel
-    ) {
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {ICustomChannel} oldChannel The old channel
+     * @param {ICustomChannel} newChannel The new channel
+     * @returns {Promise<void>} Send a message in the log channel
+     */
+    async run(client: CustomClient, oldChannel: ICustomChannel, newChannel: ICustomChannel) {
         const logChannel: TextChannel | null = getLogChannel(newChannel.guild);
 
         if (!logChannel) {

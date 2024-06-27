@@ -5,21 +5,27 @@ import {
     Events,
     Guild,
     GuildMember,
-    Invite,
     Message,
     TextChannel
 } from 'discord.js';
-
-const jsonPath = './data/log.json';
 
 const embed: EmbedBuilder = new EmbedBuilder()
     .setTitle('⚙️               Message Delete               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when a message is deleted
+ */
 module.exports = {
     name: Events.MessageDelete,
 
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {Message} message The message
+     * @returns {Promise<void>} Send a message in the log channel
+     */
     async run(client: CustomClient, message: Message) {
         if (!message.guild || !(message.guild instanceof Guild)) {
             return;

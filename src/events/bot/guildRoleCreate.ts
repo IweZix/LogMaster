@@ -1,6 +1,5 @@
 import { CustomClient } from '@/base/classes/CustomClient';
 import { getExecutor, getLogChannel } from '@/services/guildServices';
-import { parse } from '@/utils/json';
 import {
     EmbedBuilder,
     Events,
@@ -9,16 +8,23 @@ import {
     TextChannel
 } from 'discord.js';
 
-const jsonPath = './data/log.json';
-
 const embed = new EmbedBuilder()
     .setTitle('⚙️               Role Created               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when a role is created
+ */
 module.exports = {
     name: Events.GuildRoleCreate,
 
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {Role} role The role
+     * @returns {Promise<void>} Send a message in the log channel
+     */
     async run(client: CustomClient, role: Role) {
         const logChannel: TextChannel | null = getLogChannel(role.guild);
 

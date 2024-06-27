@@ -9,11 +9,17 @@ import { parse, serialize } from '@/utils/json';
 
 let jsonPath = './data/log.json';
 
+/**
+ * Embed if the log channel is set up
+ */
 const setupEmbed = new EmbedBuilder()
     .setTitle('Log Channel setup')
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Embed if the log channel is updated
+ */
 const updateEmbed = new EmbedBuilder()
     .setTitle('Log Channel updated')
     .setColor('#00FF00')
@@ -35,6 +41,11 @@ module.exports = {
                 .addChannelTypes(ChannelType.GuildText)
         ),
 
+    /**
+     * Run the interaction
+     * @param {any} interaction The interaction
+     * @returns {Promise<void>} Send a message in the log channel
+     */
     async run(interaction: any) {
         try {
             const logChannel = interaction.options.getChannel('channel');

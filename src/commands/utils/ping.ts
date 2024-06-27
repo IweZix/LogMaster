@@ -6,6 +6,9 @@ import {
     ButtonStyle
 } from 'discord.js';
 
+/**
+ * Ping command
+ */
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
@@ -13,6 +16,10 @@ module.exports = {
         .setDMPermission(true)
         .setDefaultMemberPermissions(null),
 
+    /**
+     * Run the interaction
+     * @param {any} interaction The interaction
+     */
     async run(interaction: any) {
         try {
             const embed = new EmbedBuilder()

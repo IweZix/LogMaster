@@ -1,5 +1,8 @@
 import { Channel, Guild } from 'discord.js';
 
+/**
+ * Interface for the channel
+ */
 interface IChannel {
     // Channel id
     id: String;
@@ -17,4 +20,7 @@ interface IChannel {
     nsfw: Boolean;
 }
 
+/**
+ * Custom channel interface
+ */
 export type ICustomChannel = Channel & IChannel;

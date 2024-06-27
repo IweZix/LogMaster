@@ -1,24 +1,27 @@
 import { Events, EmbedBuilder, TextChannel, GuildMember } from 'discord.js';
 
-import { parse } from '@/utils/json';
 import { CustomClient } from '@/base/classes/CustomClient';
 import { getLogChannel } from '@/services/guildServices';
-
-const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
     .setTitle('⚙️               Member Update               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when a member is updated
+ */
 module.exports = {
     name: Events.GuildMemberUpdate,
 
-    async run(
-        client: CustomClient,
-        oldMember: GuildMember,
-        newMember: GuildMember
-    ) {
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {GuildMember} oldMember The member before the update
+     * @param {GuildMember} newMember The member after the update
+     * @returns {Promise<void>} Send a message in the log channel
+     */
+    async run(client: CustomClient, oldMember: GuildMember, newMember: GuildMember) {
         const logChannel: TextChannel | null = getLogChannel(newMember.guild);
 
         if (!logChannel) {

@@ -16,9 +16,18 @@ const embed: EmbedBuilder = new EmbedBuilder()
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when an invite is created
+ */
 module.exports = {
     name: Events.InviteCreate,
 
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {Invite} invite The invite
+     * @returns {Promise<void>} Send a message in the log channel
+     */
     async run(client: CustomClient, invite: Invite) {
         if (!invite.guild || !(invite.guild instanceof Guild)) {
             return;

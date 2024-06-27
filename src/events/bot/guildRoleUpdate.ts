@@ -8,16 +8,24 @@ import {
     TextChannel
 } from 'discord.js';
 
-const jsonPath = './data/log.json';
-
 const embed = new EmbedBuilder()
     .setTitle('⚙️               Role Updated               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
+/**
+ * Launch when a role is updated
+ */
 module.exports = {
     name: Events.GuildRoleUpdate,
 
+    /**
+     * Run the event
+     * @param {CustomClient} client The client
+     * @param {Role} oldRole The role before the update
+     * @param {Role} newRole The role after the update
+     * @returns {Promise<void>} Send a message in the log channel
+     */
     async run(client: CustomClient, oldRole: Role, newRole: any) {
         const logChannel: TextChannel | null = getLogChannel(newRole.guild);
 
