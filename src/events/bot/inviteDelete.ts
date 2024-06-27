@@ -26,7 +26,7 @@ module.exports = {
         const executor: GuildMember = await getExecutor(invite.guild);
         
         embed.setDescription(`
-            A invite has been deleted.
+            An invite has been deleted.
             > **Executor:** <@${executor?.id || 'Unknown'}>
             > **Date:** ${new Date().toLocaleString()}
             > **Link:** ${invite.url}
