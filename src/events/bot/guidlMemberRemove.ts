@@ -11,7 +11,7 @@ import { getLogChannel } from '@/services/guildServices';
 const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
-    .setTitle('Member Left')
+    .setTitle('⚙️               Member Left               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 

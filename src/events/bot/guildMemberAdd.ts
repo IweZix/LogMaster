@@ -12,7 +12,7 @@ import { getLogChannel } from '@/services/guildServices';
 const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
-    .setTitle('Member Joined')
+    .setTitle('⚙️               Member Joined               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
