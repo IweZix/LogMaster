@@ -7,11 +7,12 @@ import {
 
 import { parse } from '@/utils/json';
 import { CustomClient } from '@/base/classes/CustomClient';
+import { getLogChannel } from '@/services/guildServices';
 
 const jsonPath = './data/log.json';
 
 const embed = new EmbedBuilder()
-    .setTitle('Member Update')
+    .setTitle('⚙️               Member Update               ⚙️')
     .setColor('#00FF00')
     .setTimestamp();
 
@@ -19,18 +20,7 @@ module.exports = {
     name: Events.GuildMemberUpdate,
 
     async run(client: CustomClient, oldMember: GuildMember, newMember: GuildMember) {
-        
-        const guildId = newMember.guild?.id;
-        const data = parse(jsonPath, []);
-        const guildData = data.find((data: any) => data.guildId === guildId);
-
-        if (!guildData) {
-            return;
-        }
-
-        const logChannel = newMember.guild?.channels.cache.get(
-            guildData.logChannelId
-        ) as TextChannel;
+        const logChannel: TextChannel | null = getLogChannel(newMember.guild);
 
         if (!logChannel) {
             return;
