@@ -22,7 +22,11 @@ const embed = new EmbedBuilder()
 module.exports = {
     name: Events.ChannelUpdate,
 
-    async run(client: CustomClient, oldChannel: ICustomChannel, newChannel: ICustomChannel) {
+    async run(
+        client: CustomClient,
+        oldChannel: ICustomChannel,
+        newChannel: ICustomChannel
+    ) {
         const logChannel: TextChannel | null = getLogChannel(newChannel.guild);
 
         if (!logChannel) {

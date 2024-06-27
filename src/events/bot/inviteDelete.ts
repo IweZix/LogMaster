@@ -1,6 +1,13 @@
-import { CustomClient } from "@/base/classes/CustomClient";
-import { getExecutor, getLogChannel } from "@/services/guildServices";
-import { EmbedBuilder, Events, Guild, GuildMember, Invite, TextChannel } from "discord.js";
+import { CustomClient } from '@/base/classes/CustomClient';
+import { getExecutor, getLogChannel } from '@/services/guildServices';
+import {
+    EmbedBuilder,
+    Events,
+    Guild,
+    GuildMember,
+    Invite,
+    TextChannel
+} from 'discord.js';
 
 const jsonPath = './data/log.json';
 
@@ -16,7 +23,7 @@ module.exports = {
         if (!invite.guild || !(invite.guild instanceof Guild)) {
             return;
         }
-        
+
         const logChannel: TextChannel | null = getLogChannel(invite.guild);
 
         if (!logChannel) {
@@ -24,14 +31,18 @@ module.exports = {
         }
 
         const executor: GuildMember = await getExecutor(invite.guild);
-        
-        embed.setDescription(`
+
+        embed
+            .setDescription(
+                `
             An invite has been deleted.
             > **Executor:** <@${executor?.id || 'Unknown'}>
             > **Date:** ${new Date().toLocaleString()}
             > **Link:** ${invite.url}
-        `).setThumbnail(executor.displayAvatarURL());
+        `
+            )
+            .setThumbnail(executor.displayAvatarURL());
 
-        return await logChannel.send({embeds: [embed]});
+        return await logChannel.send({ embeds: [embed] });
     }
-}
+};

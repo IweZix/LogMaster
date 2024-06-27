@@ -1,7 +1,13 @@
-import { CustomClient } from "@/base/classes/CustomClient";
-import { getExecutor, getLogChannel } from "@/services/guildServices";
-import { parse } from "@/utils/json";
-import { EmbedBuilder, Events, GuildMember, Role, TextChannel } from "discord.js";
+import { CustomClient } from '@/base/classes/CustomClient';
+import { getExecutor, getLogChannel } from '@/services/guildServices';
+import { parse } from '@/utils/json';
+import {
+    EmbedBuilder,
+    Events,
+    GuildMember,
+    Role,
+    TextChannel
+} from 'discord.js';
 
 const jsonPath = './data/log.json';
 
@@ -22,15 +28,19 @@ module.exports = {
 
         const executor: GuildMember = await getExecutor(role.guild);
 
-        embed.setDescription(`
+        embed
+            .setDescription(
+                `
             A new role has been created.
             > **Role:** ${role.name}
             > **Id:** ${role.id}
             > **Managed:** ${role.managed ? 'Yes' : 'No'}
             > **Mentionable:** ${role.mentionable ? 'Yes' : 'No'}
             > **Executor:** ${executor}
-        `).setThumbnail(executor.displayAvatarURL());
+        `
+            )
+            .setThumbnail(executor.displayAvatarURL());
 
-        return await logChannel.send({ embeds: [embed]});
+        return await logChannel.send({ embeds: [embed] });
     }
 };

@@ -1,6 +1,13 @@
-import { CustomClient } from "@/base/classes/CustomClient";
-import { getExecutor, getLogChannel } from "@/services/guildServices";
-import { EmbedBuilder, Events, Guild, GuildMember, Role, TextChannel } from "discord.js";
+import { CustomClient } from '@/base/classes/CustomClient';
+import { getExecutor, getLogChannel } from '@/services/guildServices';
+import {
+    EmbedBuilder,
+    Events,
+    Guild,
+    GuildMember,
+    Role,
+    TextChannel
+} from 'discord.js';
 
 const jsonPath = './data/log.json';
 
@@ -12,7 +19,7 @@ const embed: EmbedBuilder = new EmbedBuilder()
 module.exports = {
     name: Events.GuildUpdate,
 
-    async run(client: CustomClient, oldGuild: Guild, newGuild: Guild) {              
+    async run(client: CustomClient, oldGuild: Guild, newGuild: Guild) {
         const logChannel: TextChannel | null = getLogChannel(newGuild);
 
         if (!logChannel) {
@@ -46,16 +53,19 @@ module.exports = {
         if (oldGuild.nsfwLevel !== newGuild.nsfwLevel) {
             changes += `> **NSFW Level:** ${oldGuild.nsfwLevel} -> ${newGuild.nsfwLevel}\n`;
         }
-        
-        embed.setDescription(`
+
+        embed
+            .setDescription(
+                `
             The guild has been updated.
             > **Executor:** <@${executor?.id || 'Unknown'}>
             > **Date:** ${new Date().toLocaleString()}
 
             __**Changes:**__
             ${changes}`
-        ).setThumbnail(executor.displayAvatarURL());
+            )
+            .setThumbnail(executor.displayAvatarURL());
 
-        return await logChannel.send({embeds: [embed]});
+        return await logChannel.send({ embeds: [embed] });
     }
-}
+};

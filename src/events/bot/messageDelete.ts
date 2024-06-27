@@ -1,6 +1,14 @@
-import { CustomClient } from "@/base/classes/CustomClient";
-import { getExecutor, getLogChannel } from "@/services/guildServices";
-import { EmbedBuilder, Events, Guild, GuildMember, Invite, Message, TextChannel } from "discord.js";
+import { CustomClient } from '@/base/classes/CustomClient';
+import { getExecutor, getLogChannel } from '@/services/guildServices';
+import {
+    EmbedBuilder,
+    Events,
+    Guild,
+    GuildMember,
+    Invite,
+    Message,
+    TextChannel
+} from 'discord.js';
 
 const jsonPath = './data/log.json';
 
@@ -12,11 +20,11 @@ const embed: EmbedBuilder = new EmbedBuilder()
 module.exports = {
     name: Events.MessageDelete,
 
-    async run(client: CustomClient, message: Message) {  
+    async run(client: CustomClient, message: Message) {
         if (!message.guild || !(message.guild instanceof Guild)) {
             return;
         }
-        
+
         const logChannel: TextChannel | null = getLogChannel(message.guild);
 
         if (!logChannel) {
@@ -24,8 +32,10 @@ module.exports = {
         }
 
         const executor: GuildMember = await getExecutor(message.guild);
-        
-        embed.setDescription(`
+
+        embed
+            .setDescription(
+                `
             A message has been deleted.
             > **Executor:** <@${executor?.id || 'Unknown'}>
             > **Date:** ${new Date().toLocaleString()}
@@ -34,8 +44,10 @@ module.exports = {
             
             __**Content:**__
             ${message.content}
-        `).setThumbnail(executor.displayAvatarURL());
+        `
+            )
+            .setThumbnail(executor.displayAvatarURL());
 
-        return await logChannel.send({embeds: [embed]});
+        return await logChannel.send({ embeds: [embed] });
     }
-}
+};

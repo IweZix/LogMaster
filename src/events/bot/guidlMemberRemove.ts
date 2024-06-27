@@ -1,9 +1,4 @@
-import {
-    Events,
-    EmbedBuilder,
-    TextChannel,
-    GuildMember,
-} from 'discord.js';
+import { Events, EmbedBuilder, TextChannel, GuildMember } from 'discord.js';
 
 import { CustomClient } from '@/base/classes/CustomClient';
 import { getLogChannel } from '@/services/guildServices';
@@ -24,11 +19,15 @@ module.exports = {
         if (!logChannel) {
             return;
         }
-            
-        embed.setDescription(`
+
+        embed
+            .setDescription(
+                `
             A member has left the server.
             > **name:** <#${member.id}>
-        `).setThumbnail(member.user.displayAvatarURL());
+        `
+            )
+            .setThumbnail(member.user.displayAvatarURL());
 
         return await logChannel.send({ embeds: [embed] });
     }

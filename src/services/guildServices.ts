@@ -1,5 +1,5 @@
-import { parse } from "@/utils/json";
-import { Guild, GuildMember, TextChannel } from "discord.js";
+import { parse } from '@/utils/json';
+import { Guild, GuildMember, TextChannel } from 'discord.js';
 
 const jsonPath = './data/log.json';
 
@@ -26,7 +26,7 @@ export const getLogChannel = (guild: Guild): TextChannel | null => {
     }
 
     return logChannel;
-}
+};
 
 /**
  * Get the executor of a guild
@@ -36,6 +36,8 @@ export const getLogChannel = (guild: Guild): TextChannel | null => {
 export const getExecutor = async (any: any): Promise<GuildMember> => {
     const logs = (await any
         .fetchAuditLogs({ type: 12 })
-        .then((audit: { entries: { first: () => any; }; }) => audit.entries.first())) || { executor: null };
+        .then((audit: { entries: { first: () => any } }) =>
+            audit.entries.first()
+        )) || { executor: null };
     return logs.executor;
-}
+};

@@ -32,18 +32,26 @@ module.exports = {
             const parent = channel.guild?.channels.cache.get(
                 channel.parentId
             ) as CategoryChannel;
-            embed.setDescription(`
+            embed
+                .setDescription(
+                    `
                 A ${ChannelType[channel.type]} channel has been deleted.
                 > **name:** ${channel.name}
                 > **parent:** ${parent.toString()}
                 > **executor:** <@${executor}>
-            `).setThumbnail(executor.displayAvatarURL());
+            `
+                )
+                .setThumbnail(executor.displayAvatarURL());
         } else {
-            embed.setDescription(`
+            embed
+                .setDescription(
+                    `
                 A ${ChannelType[channel.type]} channel has been deleted.
                 > **name:** ${channel.name}
                 > **executor:** ${executor || 'Unknown'}
-            `).setThumbnail(executor.displayAvatarURL());
+            `
+                )
+                .setThumbnail(executor.displayAvatarURL());
         }
 
         return await logChannel.send({ embeds: [embed] });

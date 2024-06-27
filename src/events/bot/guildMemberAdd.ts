@@ -1,9 +1,4 @@
-import {
-    Events,
-    EmbedBuilder,
-    TextChannel,
-    GuildMember,
-} from 'discord.js';
+import { Events, EmbedBuilder, TextChannel, GuildMember } from 'discord.js';
 
 import { parse } from '@/utils/json';
 import { CustomClient } from '@/base/classes/CustomClient';
@@ -25,11 +20,15 @@ module.exports = {
         if (!logChannel) {
             return;
         }
-            
-        embed.setDescription(`
+
+        embed
+            .setDescription(
+                `
             A new member has joined the server.
             > **name:** <#${member.id}>
-        `).setThumbnail(member.user.displayAvatarURL());
+        `
+            )
+            .setThumbnail(member.user.displayAvatarURL());
 
         return await logChannel.send({ embeds: [embed] });
     }

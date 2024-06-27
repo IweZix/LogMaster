@@ -35,18 +35,26 @@ module.exports = {
             const parent = channel.guild?.channels.cache.get(
                 channel.parentId
             ) as CategoryChannel;
-            embed.setDescription(`
+            embed
+                .setDescription(
+                    `
                 A new ${ChannelType[channel.type]} channel has been created.
                 > **name:** <#${channel.id}>
                 > **parent:** ${parent.toString()}
                 > **executor:** ${executor}
-            `).setThumbnail(executor.displayAvatarURL());
+            `
+                )
+                .setThumbnail(executor.displayAvatarURL());
         } else {
-            embed.setDescription(`
+            embed
+                .setDescription(
+                    `
                 A new ${ChannelType[channel.type]} channel has been created.
                 > **name:** <#${channel.id}>
                 > **executor:** ${executor}
-            `).setThumbnail(executor.displayAvatarURL());
+            `
+                )
+                .setThumbnail(executor.displayAvatarURL());
         }
 
         return await logChannel.send({ embeds: [embed] });
