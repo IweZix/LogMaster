@@ -26,7 +26,7 @@ module.exports = {
         const executor: GuildMember = await getExecutor(invite.guild);
         
         embed.setDescription(`
-            The guild has been updated.
+            An invite has been created.
             > **Executor:** <@${executor?.id || 'Unknown'}>
             > **Date:** ${new Date().toLocaleString()}
             > **Link:** ${invite.url}
