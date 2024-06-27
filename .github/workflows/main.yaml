@@ -28,8 +28,8 @@ jobs:
     #- name: Typecheck
     #  run: npm run type-check
 
-    #- name: Formatting Lint
-    #  run: npm run lint
+    - name: Formatting Lint
+      run: npm run lint
 
     - name: Formatting Prettier
       run: npm run prettier
