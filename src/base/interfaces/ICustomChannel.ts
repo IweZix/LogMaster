@@ -6,6 +6,8 @@ import { Channel, Guild } from 'discord.js';
 interface IChannel {
     // Channel id
     id: String;
+    // Channel Id (only for voice channels)
+    channelId: Number;
     // Channel name
     name: String;
     // Channel type : accessible via ChannelType[interaction.type]
