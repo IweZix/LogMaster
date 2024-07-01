@@ -21,7 +21,7 @@ LogMaster is a Discord bot that allows you to log every activity of your server.
 <!-- Installation -->
 # 🛠️ Installation
 
-> To install the bot, you must first clone the repository OR download the last [release](https://github.com/IweZix/BeatMaster/releases) :
+> To install the bot, you must first clone the repository OR download the last [release](https://github.com/IweZix/LogMaster/releases) :
 
 ```bash
 git clone https://github.com/IweZix/LogMaster.git
