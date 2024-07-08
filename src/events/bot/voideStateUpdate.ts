@@ -1,6 +1,6 @@
 import { CustomClient } from "@/base/classes/CustomClient";
 import { ICustomChannel } from "@/base/interfaces/ICustomChannel";
-import { getExecutor, getLogChannel } from "@/services/guildServices";
+import { getLogChannel, getExecutorById } from "@/services/guildServices";
 import { EmbedBuilder, Events, GuildMember, TextChannel, VoiceChannel } from "discord.js";
 
 const embed: EmbedBuilder = new EmbedBuilder()
@@ -24,19 +24,18 @@ module.exports = {
     async run(client: CustomClient, oldChannel: ICustomChannel, newChannel: ICustomChannel) {
 
         let logChannel: TextChannel | null;
-        let executor: GuildMember;
+        const executor: GuildMember = await getExecutorById(newChannel.guild, newChannel.id);
+        
+        
 
         if (!oldChannel) {
             logChannel = getLogChannel(newChannel.guild);
-            executor = await getExecutor(newChannel.guild);
         } else {
             logChannel = getLogChannel(oldChannel.guild);
-            executor = await getExecutor(oldChannel.guild);
         }
 
         if (!logChannel) {
             console.log('Log channel not found');
-            
             return;
         }
 

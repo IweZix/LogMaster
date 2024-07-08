@@ -41,3 +41,7 @@ export const getExecutor = async (any: any): Promise<GuildMember> => {
         )) || { executor: null };
     return logs.executor;
 };
+
+export const getExecutorById = async (guild: Guild, id: string): Promise<GuildMember> => {
+    return await guild.members.fetch({ user: id });
+}
