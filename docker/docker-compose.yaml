@@ -1,0 +1,12 @@
+version: '3'
+services:
+  logmaster:
+    image: node:latest
+    container_name: LogMaster
+    restart: always
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: sh -c "git pull && npm install && npm run dev"
+    environment:
+      - GIT_TERMINAL_PROMPT=0 # Optionnel, désactive les prompts Git
