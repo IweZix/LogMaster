@@ -51,7 +51,7 @@ module.exports = {
             const newParent = newChannel.guild?.channels.cache.get(
                 newChannel.parentId || 'Unknown'
             ) as CategoryChannel;
-            changes += `> **Parent:** ${oldParent.toString()} -> ${newParent.toString()}\n`;
+            changes += `> **Parent:** ${oldParent} -> ${newParent}\n`;
         }
 
         if (oldChannel.nsfw !== newChannel.nsfw) {

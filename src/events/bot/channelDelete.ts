@@ -50,7 +50,7 @@ module.exports = {
                 > **executor:** <@${executor}>
             `
                 )
-                .setThumbnail(executor.displayAvatarURL());
+                .setThumbnail(executor.displayAvatarURL() ? executor.displayAvatarURL() : '');
         } else {
             embed
                 .setDescription(
@@ -60,7 +60,7 @@ module.exports = {
                 > **executor:** ${executor || 'Unknown'}
             `
                 )
-                .setThumbnail(executor.displayAvatarURL());
+                .setThumbnail(executor.displayAvatarURL() ? executor.displayAvatarURL() : '');
         }
 
         return await logChannel.send({ embeds: [embed] });
