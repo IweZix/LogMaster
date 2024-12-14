@@ -45,11 +45,20 @@ SUPPORT_SERVER_URL=""
 WEB_SITE_URL=""
 ```
 
-> You can now start the bot :
+# Running the bot
+
+> In terminal, you can run the bot with the following commands :
 
 ```bash
 npm run build
 npm run start
+```
+
+> In docker, you can run the bot with the following commands :
+
+```bash
+cd docker
+docker-compose up -d
 ```
 
 # 📝 License
