@@ -57,7 +57,6 @@ npm run start
 > In docker, you can run the bot with the following commands :
 
 ```bash
-cd docker
 docker-compose up -d
 ```
 
