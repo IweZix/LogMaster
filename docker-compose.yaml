@@ -6,5 +6,8 @@ services:
     restart: always
     volumes:
       - ./:/usr/src/app
+      - /usr/src/app/node_modules
     working_dir: /usr/src/app
     command: sh -c "npm install && npm run dev"
+    environment:
+      - NODE_NO_WARNINGS=1
